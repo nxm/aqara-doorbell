@@ -31,3 +31,18 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh release create "$GITHUB_REF_NAME" dist/* --title "$GITHUB_REF_NAME" --generate-notes
+
+      # Keep the Nix package (macos/release.json) pinned to this release. The
+      # hash is the SRI form Nix expects; openssl avoids needing Nix on the runner.
+      - name: Pin the Nix package to this release
+        run: |
+          set -euo pipefail
+          V="${GITHUB_REF_NAME#v}"
+          HASH="sha256-$(openssl dgst -sha256 -binary "dist/AqaraDoorbell-$V.zip" | base64)"
+          git fetch --depth=1 origin main
+          git checkout -B main origin/main
+          printf '{\n  "version": "%s",\n  "hash": "%s"\n}\n' "$V" "$HASH" > macos/release.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "macos: pin the Nix package to $V"
+          git push origin main

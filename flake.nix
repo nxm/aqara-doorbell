@@ -27,8 +27,15 @@
         };
       in
       {
-        packages.notifier = notifier;
-        packages.default = notifier;
+        packages = {
+          notifier = notifier;
+          default = notifier;
+        }
+        # The menu-bar app (prebuilt release bundle). For nix-darwin, add it to
+        # environment.systemPackages or any option that links $out/Applications.
+        // nixpkgs.lib.optionalAttrs pkgs.stdenv.isDarwin {
+          macos = pkgs.callPackage ./macos/package.nix { };
+        };
 
         apps.notifier = {
           type = "app";

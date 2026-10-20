@@ -30,7 +30,22 @@ and clip in Matrix. No Aqara Home app, no HomeKit hub.
 brew install --cask nxm/tap/aqara-doorbell
 ```
 
-### nix-darwin
+### Nix / nix-darwin
+
+The flake ships the release bundle as `packages.<darwin system>.macos`:
+
+```nix
+{
+  inputs.aqara-doorbell.url = "github:nxm/aqara-doorbell";
+
+  # in your nix-darwin configuration
+  environment.systemPackages = [
+    inputs.aqara-doorbell.packages.${pkgs.stdenv.hostPlatform.system}.macos
+  ];
+}
+```
+
+Or use the Homebrew cask through nix-darwin:
 
 ```nix
 homebrew = {
