@@ -10,6 +10,7 @@ and clip in Matrix. No Aqara Home app, no HomeKit hub.
 
 [![CI](https://github.com/nxm/aqara-doorbell/actions/workflows/ci.yml/badge.svg)](https://github.com/nxm/aqara-doorbell/actions/workflows/ci.yml)
 [![Release](https://img.shields.io/github/v/release/nxm/aqara-doorbell)](https://github.com/nxm/aqara-doorbell/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/nxm/aqara-doorbell/total)](https://github.com/nxm/aqara-doorbell/releases)
 ![macOS 13+](https://img.shields.io/badge/macOS-13%2B-black?logo=apple)
 ![NixOS module](https://img.shields.io/badge/NixOS-module-5277C3?logo=nixos&logoColor=white)
 ![License: MIT](https://img.shields.io/badge/license-MIT-blue)
