@@ -1,0 +1,26 @@
+# Nix
+result
+result-*
+
+# SwiftPM
+macos/.build/
+.build/
+
+# Built bundle
+*.app/
+
+# Python
+__pycache__/
+*.pyc
+
+# Secrets / local captures — never commit
+*.local.*
+*.age
+config.json
+secrets*.json
+*.token
+last_trigger.txt
+matrix_token.txt
+
+# macOS
+.DS_Store
