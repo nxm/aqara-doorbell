@@ -1,0 +1,12 @@
+name = "aqara-doorbell"
+main = "src/index.js"
+compatibility_date = "2025-09-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "aqara-doorbell"
+database_id = "fe9819cb-07ff-4da5-b8e4-b68afe9568ed"
+
+# Daily cleanup of pings older than 90 days.
+[triggers]
+crons = ["0 3 * * *"]

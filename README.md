@@ -11,6 +11,7 @@ and clip in Matrix. No Aqara Home app, no HomeKit hub.
 [![CI](https://github.com/nxm/aqara-doorbell/actions/workflows/ci.yml/badge.svg)](https://github.com/nxm/aqara-doorbell/actions/workflows/ci.yml)
 [![Release](https://img.shields.io/github/v/release/nxm/aqara-doorbell)](https://github.com/nxm/aqara-doorbell/releases/latest)
 [![Downloads](https://img.shields.io/github/downloads/nxm/aqara-doorbell/total)](https://github.com/nxm/aqara-doorbell/releases)
+[![Active installs](https://img.shields.io/endpoint?url=https://aqara-doorbell.egzeyospin.workers.dev/v1/badge)](https://aqara-doorbell.egzeyospin.workers.dev/v1/stats)
 ![macOS 13+](https://img.shields.io/badge/macOS-13%2B-black?logo=apple)
 ![NixOS module](https://img.shields.io/badge/NixOS-module-5277C3?logo=nixos&logoColor=white)
 ![License: MIT](https://img.shields.io/badge/license-MIT-blue)
@@ -154,14 +155,22 @@ can add these keys by hand:
 | `qualityChannel` | `0` | Stream quality to ask for after the first keyframe (`-1` keeps the camera's choice) |
 | `useNativeP2P` | `true` | Use the built-in P2P stack (the only one in this repo) |
 
-## Security notes
+## Privacy and security
 
 - The macOS app keeps your Aqara password in the login Keychain (service
   `aqara-doorbell`), never in a file.
 - The notifier reads every credential from an `EnvironmentFile`. Keep that file
   in a secret manager such as agenix or sops, never in the Nix store or in git.
-- Nothing here phones home. The only traffic goes to Aqara's cloud, the camera
-  and your own Matrix server.
+- Apart from Aqara's cloud, the camera and your Matrix server, there is one
+  optional connection: **update checks**. On first launch the app asks whether
+  to check for updates. If you allow it, it checks once a day with a small
+  Cloudflare Worker (source in [`server/`](server/)). Each check sends a random
+  install ID, the app version and your macOS version. The reply names the latest
+  release, and the same request counts active installs. Only these aggregate
+  counts are public, at [`/v1/stats`](https://aqara-doorbell.egzeyospin.workers.dev/v1/stats). Nothing about
+  your Aqara account or camera is sent, IP addresses are not stored, and records
+  older than 90 days are deleted. Untick **Check for updates** in the menu to
+  stop it.
 
 ## Disclaimer
 

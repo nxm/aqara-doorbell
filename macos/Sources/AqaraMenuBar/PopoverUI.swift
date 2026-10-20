@@ -47,6 +47,10 @@ final class DoorbellModel: ObservableObject {
     @Published var notificationsNeedSettings = false   // denied/failed: offer System Settings
     var testNotification: (() -> Void)?
     var logOut: (() -> Void)?
+    /// Opt-in daily update check (see UpdateChecker); toggled from the footer.
+    @Published var updateChecks = false { didSet { onUpdateChecksChanged?(updateChecks) } }
+    var onUpdateChecksChanged: ((Bool) -> Void)?
+    @Published var availableUpdate: AppUpdate?
     @Published var cameraName = "Doorbell"
     @Published var status = "Starting…"
     @Published var events: [EventVM] = []
@@ -398,6 +402,15 @@ struct DoorbellView: View {
                     Button("Test notification") { model.testNotification?() }.font(.caption)
                 }
             }.padding(.horizontal, 12).padding(.top, 6)
+            HStack {
+                Toggle("Check for updates", isOn: $model.updateChecks)
+                    .toggleStyle(.checkbox).font(.caption2)
+                Spacer()
+                if let update = model.availableUpdate {
+                    Button("Update to \(update.version)") { NSWorkspace.shared.open(update.url) }
+                        .font(.caption)
+                }
+            }.padding(.horizontal, 12).padding(.top, 4)
             HStack {
                 Text(model.status).font(.caption).foregroundColor(.secondary).lineLimit(1)
                 Spacer()

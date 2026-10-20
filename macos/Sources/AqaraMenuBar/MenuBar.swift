@@ -59,6 +59,7 @@ final class MenuBarController: NSObject, NSApplicationDelegate, UNUserNotificati
     private var notifiedEvents: [String: Int64] = [:]
     private var pollTask: Task<Void, Never>?
     private var setupWindow: NSWindow?
+    private var updates: UpdateChecker?
 
     func applicationDidFinishLaunching(_ note: Notification) {
         if let cfg = AppConfig.load() { launch(cfg) } else { showSetup() }
@@ -138,6 +139,9 @@ final class MenuBarController: NSObject, NSApplicationDelegate, UNUserNotificati
         model.logOut = { [weak self] in self?.logOut() }
         Task { await refreshNotificationPermission(request: true) }
         start()
+        let updates = UpdateChecker(model: model)
+        self.updates = updates
+        updates.start()
     }
 
     @objc private func togglePopover() {
