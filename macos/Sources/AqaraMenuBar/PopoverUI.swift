@@ -51,6 +51,12 @@ final class DoorbellModel: ObservableObject {
     @Published var updateChecks = false { didSet { onUpdateChecksChanged?(updateChecks) } }
     var onUpdateChecksChanged: ((Bool) -> Void)?
     @Published var availableUpdate: AppUpdate?
+    @Published var openAtLogin = LoginItem.isEnabled
+
+    func setOpenAtLogin(_ on: Bool) {
+        if let message = LoginItem.set(on) { status = message }
+        openAtLogin = LoginItem.isEnabled   // reflect what macOS actually did
+    }
     @Published var cameraName = "Doorbell"
     @Published var status = "Starting…"
     @Published var events: [EventVM] = []
@@ -404,6 +410,9 @@ struct DoorbellView: View {
             }.padding(.horizontal, 12).padding(.top, 6)
             HStack {
                 Toggle("Check for updates", isOn: $model.updateChecks)
+                    .toggleStyle(.checkbox).font(.caption2)
+                Toggle("Open at login", isOn: Binding(
+                    get: { model.openAtLogin }, set: { model.setOpenAtLogin($0) }))
                     .toggleStyle(.checkbox).font(.caption2)
                 Spacer()
                 if let update = model.availableUpdate {

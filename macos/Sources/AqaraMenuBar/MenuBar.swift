@@ -150,6 +150,7 @@ final class MenuBarController: NSObject, NSApplicationDelegate, UNUserNotificati
 
     private func openPanel() {
         Task { await refreshNotificationPermission() }
+        model.openAtLogin = LoginItem.isEnabled   // may have changed in System Settings
         guard let btn = statusItem.button, let btnWin = btn.window else { return }
         if let host = panel.contentView { host.setFrameSize(host.fittingSize); panel.setContentSize(host.fittingSize) }
         // Anchor the panel's top-right under the status item, below the menu bar.

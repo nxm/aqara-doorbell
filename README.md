@@ -84,8 +84,8 @@ goes to your login **Keychain**, and the region and email go to
 `~/.config/aqara-doorbell/config.json`.
 
 After that the app lives in the menu bar (look for the door icon) and has no
-Dock icon. Click it to open live view. **Log out** in the popover forgets the
-account.
+Dock icon. Click it to open live view. Tick **Open at login** in the popover to
+start it with your Mac. **Log out** forgets the account.
 
 > If the menu bar is full, macOS can hide new icons behind the notch. Hold `⌘`
 > and drag other icons to make room.
