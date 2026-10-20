@@ -113,6 +113,9 @@ are written up in [`docs/PROTOCOL.md`](docs/PROTOCOL.md).
 
 ## Matrix notifier
 
+<p align="center"><img src="docs/matrix.png" width="320" alt="A motion alert in Matrix: the snapshot, with the clip in a thread"></p>
+
+Each motion event arrives as a snapshot, with the clip threaded underneath.
 See [`notifier/README.md`](notifier/README.md) for every environment variable.
 
 ### NixOS (flake)
