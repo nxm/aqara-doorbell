@@ -9,7 +9,7 @@ jobs:
   macos-app:
     runs-on: macos-15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Test
         run: swift test --package-path macos
       - name: Build universal app
@@ -18,7 +18,7 @@ jobs:
   notifier:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: cachix/install-nix-action@v31
       - name: Flake check
         run: nix flake check
